@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import appStyle from './App.module.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component{
+
+  state = {
+    value: ''
+  }
+
+  valueHandler = e =>{
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  submitHandler = e =>{
+    e.preventDefault();
+
+  }
+
+  render(){
+    return(
+      <div className={appStyle.App}>
+        <h1>Greg's URL Shortener</h1>
+        <div className={appStyle.positioning}>
+          <form className={appStyle.box} onSubmit={this.submitHandler}>
+            <p>Trim URL Below! </p>
+            <div>
+              <input
+                className={appStyle.inputText}
+                type="url"
+                placeholder="Paste URL Here"
+                value={this.state.value}
+                onChange={this.valueHandler}
+              />
+            </div>
+            <div>
+              <button type="submit" className={appStyle.inputSubmit}>Submit</button>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
