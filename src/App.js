@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import appStyle from './App.module.css'
+import ResultModal from './components/modal';
 
 
 class App extends Component{
 
   state = {
-    value: ''
+    value: '',
+    openModal: false,
+    tinyURL: null
   }
 
   valueHandler = e =>{
@@ -16,15 +19,31 @@ class App extends Component{
 
   submitHandler = e =>{
     e.preventDefault();
-
+    this.setState({
+      tinyURL: this.state.value,
+      openModal: true
+    })
+    
   }
 
+  closeModal = () =>{
+    this.setState({
+        openModal: false
+    })
+}
+
   render(){
+    // console.log(this.state)
     return(
       <div className={appStyle.App}>
+        <ResultModal
+          show={this.state.openModal}
+          closed={this.closeModal}
+          newURL={this.state.tinyURL}
+        />
         <h1>Greg's URL Shortener</h1>
         <div className={appStyle.positioning}>
-          <form className={appStyle.box} onSubmit={this.submitHandler}>
+          <form className={appStyle.box} onSubmit={e=>this.submitHandler(e)}>
             <p>Trim URL Below! </p>
             <div>
               <input
