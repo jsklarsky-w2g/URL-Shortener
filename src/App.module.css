@@ -1,5 +1,5 @@
 .App {
-    margin:0;
+    margin: auto;
     padding:20px;
     color: white;
     background-color: blue;
@@ -61,3 +61,4 @@
     transition: .2s;
     transform: scale(0.85)
 }
+
