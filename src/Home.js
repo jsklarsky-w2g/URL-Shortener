@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import appStyle from './Home.module.css'
 import ResultModal from './components/modal';
-import { read } from './AxiosOrders'
+import { read, write } from './AxiosOrders'
 
 var randomstring = require("randomstring");
 
@@ -15,6 +15,26 @@ class Home extends Component{
     let res = await read.get();
     let { data } = res;
     this.setState({ currentUrls: data })
+  }
+
+  addToDatabase = (trim, full) =>{
+   
+    console.log(trim, full)
+    write.put(`${trim}/${full}.json`)
+      .then(res=>{
+        console.log(res)
+        this.setState({
+          openModal:true,
+          tinyURL: `localhost:3000/${trim}`
+        })
+      })
+      .catch(err=>{
+        console.log(err)
+        this.setState({
+          title: 'Whoops...something went wrong'
+        })
+      })
+      this.getURLs()
   }
 
   state = {
@@ -60,11 +80,7 @@ class Home extends Component{
         })
       } else {
         const hash = this.createHash();
-        this.setState(prevState=>({
-          openModal:true,
-          tinyURL: `localhost:3000/${hash}`
-        }))
-        this.getURLs()
+        this.addToDatabase(hash, newUrl)
       }
     }
   }
