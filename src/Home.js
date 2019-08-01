@@ -3,6 +3,7 @@ import appStyle from './Home.module.css'
 import ResultModal from './components/modal';
 import { read } from './AxiosOrders'
 
+var randomstring = require("randomstring");
 
 class Home extends Component{
 
@@ -30,18 +31,41 @@ class Home extends Component{
     })
   }
 
+  createHash = () =>{
+    let newHash = randomstring.generate({
+      length: 12,
+      charset: 'alphabetic'
+    });
+    if(Object.keys(this.state.currentUrls).includes(newHash)){
+      this.createHash()
+    } else{
+      return newHash
+    }
+  }
+
   submitHandler = e =>{
     e.preventDefault();
-    if(this.state.value === ''){
+    const currentUrls = this.state.currentUrls
+    const newUrl = this.state.value
+    if(newUrl === ''){
       this.setState({
         title: 'Oops...you forgot to enter a URL'
       })
     }else{
-      this.setState(prevState=>({
-        // currentUrls: prevState.concat(),
-        tinyURL: `https://gtrim.com/123`,
-        openModal: true
-      }))
+     if(Object.values(currentUrls).includes(newUrl)){
+        const link = Object.keys(currentUrls).find(url=>currentUrls[url] === newUrl)
+        this.setState({
+          openModal: true,
+          tinyURL: `localhost:3000/${link}`
+        })
+      } else {
+        const hash = this.createHash();
+        this.setState(prevState=>({
+          openModal:true,
+          tinyURL: `localhost:3000/${hash}`
+        }))
+        this.getURLs()
+      }
     }
   }
 
@@ -53,13 +77,12 @@ class Home extends Component{
 
   render(){
     console.log(this.state.currentUrls)
-
     if(window.location.pathname.length >1){
       const param = window.location.pathname.replace(/[/]/,"")
       console.log(param)
       Object.keys(this.state.currentUrls).includes(param) ? 
-      window.location.assign(this.state.currentUrls[param]['url']) :
-      console.log('not a valid link')
+      window.location.assign(this.state.currentUrls[param]) :
+      console.log('not a valid parameter')
     }
     return(
       <div className={appStyle.App}>
