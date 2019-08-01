@@ -20,7 +20,7 @@ class Home extends Component{
   addToDatabase = (trim, full) =>{
    
     console.log(trim, full)
-    write.put(`${trim}/${full}.json`)
+    write.put(`${trim}/${full}.json`) //shit goes haywire here!!!
       .then(res=>{
         console.log(res)
         this.setState({
