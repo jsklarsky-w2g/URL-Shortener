@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import appStyle from './Home.module.css'
 import ResultModal from './components/modal';
+import { read } from './AxiosOrders'
 
 
 class Home extends Component{
 
+  componentDidMount(){
+    this.getURLs();
+  }
+
+  getURLs = async () =>{
+    let res = await read.get();
+    let { data } = res;
+    this.setState({ currentUrls: data })
+  }
+
   state = {
+    currentUrls:{},
     value: '',
     openModal: false,
     tinyURL: null,
@@ -25,10 +37,11 @@ class Home extends Component{
         title: 'Oops...you forgot to enter a URL'
       })
     }else{
-      this.setState({
+      this.setState(prevState=>({
+        // currentUrls: prevState.concat(),
         tinyURL: `https://gtrim.com/123`,
         openModal: true
-      })
+      }))
     }
   }
 
@@ -39,7 +52,15 @@ class Home extends Component{
 }
 
   render(){
-    // console.log(this.state)
+    console.log(this.state.currentUrls)
+
+    if(window.location.pathname.length >1){
+      const param = window.location.pathname.replace(/[/]/,"")
+      console.log(param)
+      Object.keys(this.state.currentUrls).includes(param) ? 
+      window.location.assign(this.state.currentUrls[param]['url']) :
+      console.log('not a valid link')
+    }
     return(
       <div className={appStyle.App}>
         <ResultModal
