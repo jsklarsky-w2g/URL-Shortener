@@ -1,75 +1,31 @@
 import React, { Component } from 'react';
-import appStyle from './App.module.css'
-import ResultModal from './components/modal';
+import { Route, Switch, Redirect } from "react-router-dom"
 
+import Home from './Home'
 
 class App extends Component{
 
-  state = {
-    value: '',
-    openModal: false,
-    tinyURL: null,
-    title: 'Trim URL Below!'
-  }
+    NoPage = () =>{
+        return(
+          <div>
+              <Redirect push to={Home}/>
+          </div>
+        )
+      }
 
-  valueHandler = e =>{
-    this.setState({
-      value: e.target.value
-    })
-  }
-
-  submitHandler = e =>{
-    e.preventDefault();
-    if(this.state.value === ''){
-      this.setState({
-        title: 'Oops...you forgot to enter a URL'
-      })
-    }else{
-      this.setState({
-        tinyURL: `https://gtrim.com/123`,
-        openModal: true
-      })
+    findParam = () =>{
+        const param = window.location.pathname
     }
-  }
 
-  closeModal = () =>{
-    this.setState({
-        openModal: false
-    })
-}
-
-  render(){
-    // console.log(this.state)
-    return(
-      <div className={appStyle.App}>
-        <ResultModal
-          show={this.state.openModal}
-          closed={this.closeModal}
-          newURL={this.state.tinyURL}
-          yourHref={this.state.value}
-        />
-        <h1>Greg's URL Shortener</h1>
-        <div className={appStyle.positioning}>
-          <form className={appStyle.box} onSubmit={e=>this.submitHandler(e)}>
-            <p>{this.state.title}</p>
-            <div>
-              <input
-                className={appStyle.inputText}
-                type="url"
-                placeholder='Paste URL Here'
-                value={this.state.value}
-                onChange={this.valueHandler}
-              />
-            </div>
-            <div>
-              <button type="submit" className={appStyle.inputSubmit}>Submit</button>
-            </div>
-            
-          </form>
-        </div>
-      </div>
-    );
-  }
-}
+    render(){
+        return(
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route exact path="/:param" component={this.findParam}/> 
+                <Route component ={this.NoPage}/> 
+            </Switch>
+        );
+    };
+};
 
 export default App;
