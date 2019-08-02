@@ -4,11 +4,11 @@ describe('Test URL Shortener',()=>{
         cy.url().should('include','localhost:3000')
     })
 
-    it('should search for value via title', ()=>{
+    it('should search for value in input header', ()=>{
        cy.get('#root > div > div.Home_positioning__OAtY0 > form > p').contains('Trim URL Below') 
     })
 
-    it('should submit without a value and get an error message in the title field', ()=>{
+    it('should submit without a value and get an error message in the input header', ()=>{
         cy.get('#root > div > div.Home_positioning__OAtY0 > form > div:nth-child(3) > button').click()
         cy.get('#root > div > div.Home_positioning__OAtY0 > form > p').contains('Oops...') 
     })
