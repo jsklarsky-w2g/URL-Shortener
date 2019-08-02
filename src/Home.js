@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
 import appStyle from './Home.module.css'
 import ResultModal from './components/modal';
-import { read, write } from './AxiosOrders'
+import axios from 'axios';
+import baseUrl from './AxiosOrders';
 
 var randomstring = require("randomstring");
 
 class Home extends Component{
+
+  state = {
+    currentUrls:{},
+    value: '',
+    openModal: false,
+    tinyURL: null,
+    title: 'Trim URL Below!'
+  }
 
   componentDidMount(){
     this.getURLs();
   }
 
   getURLs = async () =>{
-    let res = await read.get();
-    let { data } = res;
-    this.setState({ currentUrls: data })
+    const res = await axios.get(`${baseUrl}.json`);
+    const { data } = res;
+    await Object.keys(data).map(each=>{
+      this.setState(prevState=>({
+        currentURL: prevState.currentUrls[data[each].hash] = data[each].originalUrl
+      }))
+    })
   }
 
   addToDatabase = (trim, full) =>{
-   
     console.log(trim, full)
-    write.put(`${trim}/${full}.json`) //shit goes haywire here!!!
+    const myPost = {
+      hash: trim,
+      originalUrl: full
+    }
+    axios.post(`${baseUrl}.json`, myPost ) 
       .then(res=>{
         console.log(res)
         this.setState({
@@ -35,14 +51,6 @@ class Home extends Component{
         })
       })
       this.getURLs()
-  }
-
-  state = {
-    currentUrls:{},
-    value: '',
-    openModal: false,
-    tinyURL: null,
-    title: 'Trim URL Below!'
   }
 
   valueHandler = e =>{
@@ -93,13 +101,23 @@ class Home extends Component{
 
   render(){
     console.log(this.state.currentUrls)
+    let myUrl = ''
     if(window.location.pathname.length >1){
       const param = window.location.pathname.replace(/[/]/,"")
-      console.log(param)
-      Object.keys(this.state.currentUrls).includes(param) ? 
-      window.location.assign(this.state.currentUrls[param]) :
-      console.log('not a valid parameter')
+      Object.keys(this.state.currentUrls).find(currentURL=>{
+        if (currentURL === param){
+          myUrl = this.state.currentUrls[param]
+        }
+      })
+      console.log(myUrl)
+      if(myUrl.length){
+        window.location.assign(myUrl)
+      } else {
+        console.log('failed to load')
+      }
+      
     }
+ 
     return(
       <div className={appStyle.App}>
         <ResultModal

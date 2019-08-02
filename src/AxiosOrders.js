@@ -1,10 +1,6 @@
-import axios from 'axios';
+const baseURL = 'https://react-hooks-d2b4b.firebaseio.com/'
 
-export const read = axios.create({
-    baseURL: 'https://react-hooks-d2b4b.firebaseio.com/.json'
-});
+export default baseURL
 
 
-export const write = axios.create({
-    baseURL: 'https://react-hooks-d2b4b.firebaseio.com/'
-});
+
