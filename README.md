@@ -55,7 +55,7 @@ A custom a URL shortener web application in the same vein as bitly, TinyURL, etc
 ### Result Modal
 * Trimmed Urls are delivered via a modal that appears when the submitHandler() sets this.state.openModal to true upon retrieving the new url. This state is passed to the modal component and activated as follows:
 
-* Home.js
+* makeFile.js
     ```
     <ResultModal
           show={this.state.openModal}
@@ -92,7 +92,7 @@ A custom a URL shortener web application in the same vein as bitly, TinyURL, etc
     ```
 * components/modal.js
     ```
-    onst ResultModal = props => {
+    const ResultModal = props => {
     const cssModal = [
         update.Modal,
         props.show ? update.ModalOpen : update.ModalClosed

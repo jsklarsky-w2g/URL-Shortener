@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 
 import './index.css';
-import Home from './Home'
+import MakeFile from './makeFile'
 
 ReactDOM.render(
-    <Home />
+    <MakeFile />
     ,document.getElementById('root')
 );
 

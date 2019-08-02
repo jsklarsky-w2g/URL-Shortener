@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import appStyle from './Home.module.css'
+import appStyle from './makeFile.module.css'
 import ResultModal from './components/modal';
 import axios from 'axios';
 import baseUrl from './FirebaseUrl';
 
 var randomstring = require("randomstring");
 
-class Home extends Component{
+class makeFile extends Component{
 
   state = {
     currentUrls:{},
@@ -151,4 +151,4 @@ class Home extends Component{
   }
 }
 
-export default Home;
+export default makeFile;
