@@ -2,7 +2,6 @@ import React from "react";
 import update from './update.module.css'
 
 const ResultModal = props => {
-    // console.log(props.show, props.newURL, props.yourHref)
     const cssModal = [
         update.Modal,
         props.show ? update.ModalOpen : update.ModalClosed
