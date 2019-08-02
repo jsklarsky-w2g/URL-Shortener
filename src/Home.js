@@ -137,6 +137,7 @@ class Home extends Component{
                 placeholder='Paste URL Here'
                 value={this.state.value}
                 onChange={this.valueHandler}
+                data-cy="input"
               />
             </div>
             <div>
