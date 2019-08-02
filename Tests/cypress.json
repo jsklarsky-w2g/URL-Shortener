@@ -13,5 +13,7 @@
     "videoCompression": 32,
     "video": false,
     "videoUploadOnPasses": true,
-    "trashAssetsBeforeRuns": true
+    "trashAssetsBeforeRuns": true,
+
+    "chromeWebSecurity": false
 }
