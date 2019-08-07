@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import appStyle from './makeFile.module.css'
+import appStyle from './App.module.css'
 import ResultModal from './components/modal';
 import axios from 'axios';
 import baseUrl from './FirebaseUrl';
 
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory()
+
+
 var randomstring = require("randomstring");
 
-class makeFile extends Component{
+class App extends Component{
 
   state = {
     currentUrls:{},
@@ -43,7 +47,11 @@ class makeFile extends Component{
       if(myUrl.length){
         window.location.assign(myUrl)
       } else {
-        window.location.assign('/')
+        // window.location.assign('/')
+        window.history.pushState(null,null,"/")
+        this.setState({
+          title:'Not a valid URL. Create a new URL Below'
+        })
       }
     }
       
@@ -151,4 +159,4 @@ class makeFile extends Component{
   }
 }
 
-export default makeFile;
+export default App;
