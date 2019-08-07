@@ -47,7 +47,6 @@ class App extends Component{
       if(myUrl.length){
         window.location.assign(myUrl)
       } else {
-        // window.location.assign('/')
         window.history.pushState(null,null,"/")
         this.setState({
           title:'Not a valid URL. Create a new URL Below'
