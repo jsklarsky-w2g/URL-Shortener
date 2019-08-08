@@ -62,7 +62,7 @@ class App extends Component{
       originalUrl: full
     }
     axios.post(`${baseUrl}.json`, myPost ) 
-      .then( async res=>{
+      .then(async res=>{
         await this.getURLs()
         .then(
           this.setState({
