@@ -62,10 +62,18 @@ class App extends Component{
       originalUrl: full
     }
     axios.post(`${baseUrl}.json`, myPost ) 
-      .then(res=>{
-        this.setState({
+      .then( async res=>{
+        await this.getURLs()
+        .then(
+          this.setState({
           openModal:true,
           tinyURL: `localhost:3000/${trim}`
+          })
+        ).catch(err=>{
+          console.log(err)
+          this.setState({
+            title: 'Whoops...something went wrong'
+          })
         })
       })
       .catch(err=>{
@@ -74,7 +82,6 @@ class App extends Component{
           title: 'Whoops...something went wrong'
         })
       })
-      this.getURLs()
   }
 
   valueHandler = e =>{
