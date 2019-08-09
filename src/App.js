@@ -7,7 +7,6 @@ import baseUrl from './FirebaseUrl';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory()
 
-
 var randomstring = require("randomstring");
 
 class App extends Component{
@@ -64,16 +63,9 @@ class App extends Component{
     axios.post(`${baseUrl}.json`, myPost ) 
       .then(async res=>{
         await this.getURLs()
-        .then(
-          this.setState({
+        this.setState({
           openModal:true,
           tinyURL: `localhost:3000/${trim}`
-          })
-        ).catch(err=>{
-          console.log(err)
-          this.setState({
-            title: 'Whoops...something went wrong'
-          })
         })
       })
       .catch(err=>{
