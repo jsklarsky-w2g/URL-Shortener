@@ -62,7 +62,7 @@ class App extends Component{
     }
     axios.post(`${baseUrl}.json`, myPost ) 
       .then(async res=>{
-        await this.getURLs()
+        await this.getURLs();
         this.setState({
           openModal:true,
           tinyURL: `localhost:3000/${trim}`
